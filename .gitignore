@@ -1,15 +1,13 @@
 # make git ignore these files:
 
 ### Project Specific ###
-# nothing from RNN data dir (too big):
-RNN/data/
-RNN/output/
+# nothing from the stanford dataset
+images/
+data/
 
-# irrelevant things from edison
-Segmentation/help/
-Segmentation/project/
-Segmentation/edge/
-Segmentation/prompt/
+# irrelevant things from ming-yu
+Segmentation/ers/
+
 
 ### Generic Stuff ###
 ## c++ stuff

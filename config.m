@@ -12,7 +12,9 @@ RUN_DIR = [ 'Collective_Segmentation' ];
 
 % Directory holding all the source images
 IMG_DIR = [ 'images/' ];
-
+% Dir with ground truth
+GT_DIR = [ 'images/labels/'];
+gt_ext = ['.regions.txt']; % ground truth extension
 % Data directory - holds all intermediate .mat files
 DATA_DIR = [ 'data/' ];   
 
@@ -28,8 +30,19 @@ VALID = .15;
 %% OVERSEGMENATAION SETTINGS/FILENAMES
 %%%%%
 
+SEG.nC = 300; % taget number of super pixels
+SEG.lambda_prime = 0.5;
+SEG.sigma = 5.0; 
+SEG.conn8 = 1; % flag for using 8 connected grid graph (default setting).
+
 % file name to save the segmentation file
-SEG_FILE = [ DATA_DIR, 'segmented.mat'];
+SEG_FILE = [DATA_DIR, 'segmented.mat'];
+IMG_NAMES = [DATA_DIR, 'imagepath.mat'];
+
+%%%%%
+%% NEIGHBOR SETTINGS
+%%%%%
+NEIGHBOR_FILE = [ DATA_DIR, 'neighbors.mat'];
 
 %%%%%
 %% FEATURE EXTRACTION SETTINGS/FILENAMES

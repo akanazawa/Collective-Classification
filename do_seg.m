@@ -1,16 +1,63 @@
-function do_seg(config)
+function do_seg(config_file)
 %%%%%%%%%%
 % do_seg.m
 % Supersegments all N images in IMG_DIR and saves them in SEG_FILE where 
 % the data is in a N x 1 cell where each cell has the structure:
-%     file_name: the original img file name in absolute path
-%     segmented: H x W matrix where each pixel is assigned a label
+%     id: for the image file
+%     file_path: the original img file path
+%     labels: H x W matrix where each pixel is assigned a label
 %                belonging to a region
-%     truth_file: path to the ground truth data (in txt)
+%     gt: H x W pixel-wise 
 %
+% Saves the data in SEG_FILE specified in config.m
+%
+% Using Ming-yu's Entropy Rate Superpixel Segmentation code 
+% http://www.umiacs.umd.edu/~mingyliu/research.html
+%
+% Settings used for Ming-yu's supersegmentation algorithm is
+% specified in SEG variable set in config.m
 %%%%%%%%%%
 
 %% Evaluate global configuration file and load parameters
-eval(config);
+eval(config_file);
 
 %% Load images
+if ~exist([SEG_FILE])
+    content = dir(IMG_DIR);
+    names = {content.name} ;
+    ok = regexpi(names, '.*\.(jpg|png|jpeg|gif|bmp|tiff)$', 'start') ;
+    names = names(~cellfun(@isempty,ok)) ;    
+    data = cell(size(names));
+    for i = 1:length(names)
+        %% get id before .jpg
+        data{i}.id = cell2mat(regexp(names{i}, '[^\.jpg]', 'match'));
+        data{i}.file_path = fullfile(IMG_DIR,names{i});
+        img = imread(data{i}.file_path);
+        %% get the true label        
+        data{i}.gt = single(textread([GT_DIR, data{i}.id, gt_ext]));
+        %% segment the image
+        t = cputime;
+        data{i}.labels = single(mex_ers(double(img), SEG.nC));
+        fprintf(1,'Use %f sec. \n',cputime-t);
+        fprintf(1,['\t to divide the image(%s) into %d superpixels.\' ...
+                   'n'],names{i},SEG.nC);
+        %% ----- show results for the first 10-----
+        if i < 11            
+            subplot(121); imagesc(img);
+            % draw boundary
+            gray_img = rgb2gray(img);
+            [height width] = size(gray_img);
+            [bmap] = seg2bmap(data{i}.labels,width,height);
+            bmapOnGray_Img = gray_img;
+            idx = find(bmap>0);
+            timg = gray_img;
+            timg(idx) = 255;
+            bmapOnGray_Img(:,:,2) = timg;
+            bmapOnGray_Img(:,:,1) = gray_img;
+            bmapOnGray_Img(:,:,3) = gray_img;
+            subplot(122); imagesc(bmapOnGray_Img);
+        end
+    end
+    fprintf('super segmentation done!\n');
+    save([SEG_FILE], 'data');
+end
