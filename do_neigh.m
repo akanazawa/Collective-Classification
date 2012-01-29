@@ -12,9 +12,11 @@ function do_neigh(config_file)
 % 
 % saved in NEIGHBOR_FILE specified in config.m
 %%%%%%%%%%
-
+keyboard
 %% Evaluate global configuration file and load parameters
 eval(config_file);
+
+SEG.nC = 300;
 
 if ~exist([NEIGHBOR_FILE])
    load(SEG_FILE); % loads data
