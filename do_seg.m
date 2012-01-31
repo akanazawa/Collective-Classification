@@ -27,17 +27,17 @@ if ~exist([SEG_FILE])
     names = {content.name} ;
     ok = regexpi(names, '.*\.(jpg|png|jpeg|gif|bmp|tiff)$', 'start') ;
     names = names(~cellfun(@isempty,ok)) ;    
-    data = cell(size(names));
+    seg = cell(size(names));
     for i = 1:length(names)
         %% get id before .jpg
-        data{i}.id = cell2mat(regexp(names{i}, '[^\.jpg]', 'match'));
-        data{i}.file_path = fullfile(IMG_DIR,names{i});
-        img = imread(data{i}.file_path);
+        seg{i}.id = cell2mat(regexp(names{i}, '[^\.jpg]', 'match'));
+        seg{i}.file_path = fullfile(IMG_DIR,names{i});
+        img = imread(seg{i}.file_path);
         %% get the true label        
-        data{i}.gt = single(textread([GT_DIR, data{i}.id, gt_ext]));
+        seg{i}.gt = single(textread([GT_DIR, seg{i}.id, gt_ext]));
         %% segment the image
         t = cputime;
-        data{i}.labels = single(mex_ers(double(img), SEG.nC));
+        seg{i}.labels = single(mex_ers(double(img), SEG.nC));
         fprintf(1,'Use %f sec. \n',cputime-t);
         fprintf(1,['\t to divide the image(%s) into %d superpixels.\' ...
                    'n'],names{i},SEG.nC);
@@ -47,11 +47,11 @@ if ~exist([SEG_FILE])
             % draw boundary
             gray_img = rgb2gray(img);
             [height width] = size(gray_img);
-            [bmap] = seg2bmap(data{i}.labels,width,height);
+            [bmap] = seg2bmap(seg{i}.labels,width,height);
             bmapOnGray_Img = gray_img;
             idx = find(bmap>0);
             timg = gray_img;
-            timg(idx) = 255;
+            timg(idx) = 1;
             bmapOnGray_Img(:,:,2) = timg;
             bmapOnGray_Img(:,:,1) = gray_img;
             bmapOnGray_Img(:,:,3) = gray_img;
@@ -59,5 +59,5 @@ if ~exist([SEG_FILE])
         end
     end
     fprintf('super segmentation done!\n');
-    save([SEG_FILE], 'data');
+    save([SEG_FILE], 'seg');
 end

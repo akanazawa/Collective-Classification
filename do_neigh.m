@@ -10,21 +10,23 @@ function do_neigh(config_file)
 %    neighbors: a N x 1 cell where each cell contains R x R
 %    adjacentcy matrix
 % 
-% saved in NEIGHBOR_FILE specified in config.m
+% saved to the data variable in DATA_FILE as graph1
+%
 %%%%%%%%%%
-keyboard
+
 %% Evaluate global configuration file and load parameters
 eval(config_file);
 
-SEG.nC = 300;
+load(DATA_FILE); % load data
 
-if ~exist([NEIGHBOR_FILE])
-   load(SEG_FILE); % loads data
-   neighbors = cell(size(data));
-   for i = 1:length(data)
-       neighbors{i} = getNeighbors(data{i}.labels, SEG.nC);
+if ~exist(data.graph1)
+   load(SEG_FILE); % load seg
+   neighbors = cell(size(seg));
+   for i = 1:length(seg)
+       neighbors{i} = getNeighbors(seg{i}.labels, SEG.nC);
        imshow(neighbors{i});
-       fprintf('getting neighbors for %s\n', data{i}.file_path);
+       fprintf('getting neighbors for %s\n', seg{i}.file_path);
    end
-   save([NEIGHBOR_FILE], 'neighbors');
+   data.graph1 = neighbors; % add graph to data
+   save(DATA_FILE, 'data'); % write over
 end

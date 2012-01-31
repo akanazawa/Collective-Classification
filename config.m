@@ -26,6 +26,9 @@ TEST = .15;
 TRAIN = .70;
 VALID = .15;
 
+NUM_FEAT = 1;
+NUM_GRAPH = 1;
+
 %%%%%
 %% OVERSEGMENATAION SETTINGS/FILENAMES
 %%%%%
@@ -43,15 +46,13 @@ IMG_NAMES = [DATA_DIR, 'imagepath.mat'];
 %% DATA_FILE Keeps all data in format:
 %
 % data: I x 1 cell
-%     data{i}.feat1 : R x D feature matrix for each region
-%     data{i}.label: R x 1 true labels of each region
+%     data{i}.feat1 : R x D feature matrix 
+%     data{i}.label: R x 1 true label of each region
 %     data{i}.graph1: R x R adjacency matrix
-%     data{i}.featureCount : number of different features we have
-%     data{i}.graphCount: number of different count
 %
 % if adding new features or graphs, keep the format, increment the number
 
-DATA_FILE = [ DATA_DIR, 'features.mat'];
+DATA_FILE = [ DATA_DIR, 'data.mat'];
 
 %%%%%
 %% TRAINING SETTINGS

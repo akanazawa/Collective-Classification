@@ -14,7 +14,7 @@ function do_all(config)
 % end
 
 
-do_segment(config);
+do_seg(config);
 
 do_feat(config);
 
