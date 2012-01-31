@@ -59,10 +59,10 @@ if ~exist(DATA_FILE)
             features(j, :) = [colorm; colors; colorh(:); texture];
         end      
         data{i}.labels = single(labels);
-        if numel(find(unique(labels) >= 0)) ~= numel(find(unique(seg{i}.gt) >= 0))
-            fprintf('bad true region label!');
-            keyboard
-        end
+        % if numel(find(unique(labels) >= 0)) ~= numel(find(unique(seg{i}.gt) >= 0))
+        %     fprintf('bad true region label?');
+        %     keyboard
+        % end
         data{i}.feat1 = single(features);
         fprintf('done computing features for %dth image %s\n', i, ...
                 data{i}.file_path);
