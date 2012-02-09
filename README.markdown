@@ -8,4 +8,4 @@
 ### How to run 
 In MATLAB, do: 
 
-> do_all('config')
+> do_all('config');
