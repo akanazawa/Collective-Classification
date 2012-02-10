@@ -22,9 +22,7 @@ DATA_DIR = [ 'data/' ];
 %% EXPERIMENT SETTINGS
 %%%%%
 % how to divide the data
-TEST = .15;
-TRAIN = .70;
-VALID = .15;
+TEST_SPLIT = .1; %=>TRAIN = .9;
 
 CLASSES = [-1:8];
 NUM_FEAT = 1;
@@ -47,19 +45,23 @@ IMG_NAMES = [DATA_DIR, 'imagepath.mat'];
 %% DATA_FILE Keeps all data in format:
 %
 % data: I x 1 cell
-%     data{i}.feat1 : R x D feature matrix 
+%     data{i}.feat : R x D feature matrix 
 %     data{i}.label: R x 1 true label of each region
-%     data{i}.graph1: R x R adjacency matrix
+%     data{i}.graph: R x R adjacency matrix
 %
 % if adding new features or graphs, keep the format, increment the number
 
 DATA_FILE = [ DATA_DIR, 'data.mat'];
+TRAIN_DATA = [ DATA_DIR, 'train.mat'];
+TEST_DATA = [ DATA_DIR, 'test.mat'];
+
 
 %%%%%
 %% TRAINING SETTINGS
 %%%%%
 
-TRAIN.libsvm_options = 0;
+TRAIN.libsvm_options = ''; % use all default
+TRAIN.K = 5; % number of stacks
 
 %% MODEL_FILE :
 %

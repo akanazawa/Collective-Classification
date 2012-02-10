@@ -20,6 +20,8 @@ do_feat(config);
 
 do_neigh(config);
 
+do_prepareData(config); % splits data
+
 do_train(config);
 
 do_test(config);

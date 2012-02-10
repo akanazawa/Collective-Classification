@@ -12,7 +12,7 @@ function do_feat(config_file)
 % region [Image Segmentation with Topic Random Field]
 %
 % Saves the features in a I x 1 cell, data, where
-%       data{i}.feat1 : R x D feature matrix where D is the length
+%       data{i}.feat : R x D feature matrix where D is the length
 %                       of the feature and R is the total number of regions
 %       data{i}.labels: R x 1 true label of each region
 %       data{i}.file_path: the original img file path

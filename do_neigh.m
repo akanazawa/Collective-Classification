@@ -19,7 +19,7 @@ eval(config_file);
 
 load(DATA_FILE); % load data
 
-if ~exist(data.graph1)
+if ~exist(data.graph)
    load(SEG_FILE); % load seg
    neighbors = cell(size(seg));
    for i = 1:length(seg)
@@ -27,6 +27,6 @@ if ~exist(data.graph1)
        imshow(neighbors{i});
        fprintf('getting neighbors for %s\n', seg{i}.file_path);
    end
-   data.graph1 = neighbors; % add graph to data
+   data.graph = neighbors; % add graph to data
    save(DATA_FILE, 'data'); % write over
 end
