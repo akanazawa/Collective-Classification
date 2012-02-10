@@ -46,7 +46,7 @@ IMG_NAMES = [DATA_DIR, 'imagepath.mat'];
 %
 % data: I x 1 cell
 %     data{i}.feat : R x D feature matrix 
-%     data{i}.label: R x 1 true label of each region
+%     data{i}.labels: R x 1 true label of each region
 %     data{i}.graph: R x R adjacency matrix
 %
 % if adding new features or graphs, keep the format, increment the number
@@ -60,7 +60,7 @@ TEST_DATA = [ DATA_DIR, 'test.mat'];
 %% TRAINING SETTINGS
 %%%%%
 
-TRAIN.libsvm_options = ''; % use all default
+TRAIN.libsvm_options = '-t 0'; % use all default
 TRAIN.K = 5; % number of stacks
 
 %% MODEL_FILE :

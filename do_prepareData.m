@@ -19,8 +19,7 @@ if ~exist(TRAIN_DATA)
     testIdx = [1:floor(I*TEST_SPLIT)];
     trainIdx = [floor(I*TEST_SPLIT)+1:I];
 
-    data = all.data(testIdx); % test data
-    keyboard    
+    data = all.data(testIdx); % test data    
     save(TEST_DATA, 'data'); 
 
     data = all.data(trainIdx); % train data
