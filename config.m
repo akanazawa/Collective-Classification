@@ -26,6 +26,7 @@ TEST = .15;
 TRAIN = .70;
 VALID = .15;
 
+CLASSES = [-1:8];
 NUM_FEAT = 1;
 NUM_GRAPH = 1;
 
@@ -57,6 +58,17 @@ DATA_FILE = [ DATA_DIR, 'data.mat'];
 %%%%%
 %% TRAINING SETTINGS
 %%%%%
+
+TRAIN.libsvm_options = 0;
+
+%% MODEL_FILE :
+%
+% data: I x 1 cell
+%     data{i}.feat1 : R x D feature matrix 
+%     data{i}.label: R x 1 true label of each region
+%     data{i}.graph1: R x R adjacency matrix
+%
+% if adding new features or graphs, keep the format, increment the number
 
 MODEL_FILE = [ DATA_DIR, 'models.mat'];
 
