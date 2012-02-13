@@ -20,8 +20,9 @@ do_feat(config);
 
 do_neigh(config);
 
-do_prepareData(config); % splits data
+do_prepareData(config); % split data
 
 do_train(config);
 
+keyboard
 do_test(config);

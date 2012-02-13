@@ -13,7 +13,7 @@ function do_prepareData(config_file)
 %% Evaluate global configuration file and load parameters
 eval(config_file);
 
-if ~exist(TRAIN_DATA)
+%if ~exist(TRAIN_DATA)
     all = load(DATA_FILE); % load data
     I = numel(all.data); % # of total images
     testIdx = [1:floor(I*TEST_SPLIT)];
@@ -23,6 +23,7 @@ if ~exist(TRAIN_DATA)
     save(TEST_DATA, 'data'); 
 
     data = all.data(trainIdx); % train data
+
     save(TRAIN_DATA, 'data'); 
-end
+    %end
 
