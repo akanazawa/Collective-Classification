@@ -3,7 +3,7 @@
 ### Project Specific ###
 # nothing from the stanford dataset
 images/
-data/
+data/*.mat
 
 # irrelevant things from ming-yu
 Segmentation/ers/
